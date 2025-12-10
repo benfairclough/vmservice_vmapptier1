@@ -1,0 +1,58 @@
+apiVersion: crd.nsx.vmware.com/v1alpha1
+kind: SecurityPolicy
+metadata:
+  name: vmapptier1-fw
+  namespace: vmservice
+spec:
+#Priority and appliedTo - This ensures the place of the rule for order, 
+#Applied to ensure only ensures the defined PODs,VMs are allocated to the rule - This speeds up rule processing
+  priority: 1
+  appliedTo:
+  - vmSelector:
+      matchLabels:
+        app: vmapptier1
+#Rule are an array each object in this example starts with "-" and a name definition
+# Direction - Ingress you can only add sources! - Egress you can only add destinations!
+# Actions - String - allow or drop
+# In the rules section the higher the rule in the code the higer prioirty it has
+  rules:
+  - name: "Pods/VMs to my PODS/VMS in "
+    direction: Ingress
+    action: allow
+    sources:
+     - vmSelector:
+         matchLabels:
+           app: vmapptier1
+     - podSelector:
+         matchLabels:
+           app: guestbook-ui
+    ports:
+     - protocol: UDP
+       port: 53
+     - protocol: TCP
+       port: 80
+       endPort: 443
+    ports:
+     - protocol: TCP
+       port: 80
+       endPort: 443
+  - name: "Pods/VMs to my PODS/VMS out"
+    direction : Egress
+    action: allow
+    destinations:
+     - vmSelector:
+         matchLabels:
+           app: vmapptier1
+     - podSelector:
+         matchLabels:
+           app: guestbook-ui
+    ports:
+     - protocol: UDP
+       port: 53
+     - protocol: TCP
+       port: 80
+       endPort: 443
+status:
+  conditions:
+   - status: "True"
+      
