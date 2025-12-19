@@ -61,13 +61,13 @@ stringData:
               - curl -fsSL https://github.com/saltstack/salt-install-guide/releases/latest/download/salt.sources | sudo tee /etc/apt/sources.list.d/salt.sources
               - sudo apt update
               - sudo apt install salt-minion
-            #salt_minion:
-            #  conf:
+            salt_minion:
+              conf:
             #    file_client: local
             #    fileserver_backend: [gitfs]
             #    gitfs_remotes: ['https://github.com/_user_/_repo_.git']
-            #    master: 192.168.20.30
-            #  config_dir: /etc/salt
+                master: 192.168.20.30
+              config_dir: /etc/salt
             #  grains:
             #    role: [web]
             #  pkg_name: salt-minion
