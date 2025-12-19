@@ -55,7 +55,7 @@ stringData:
             runcmd:
               - date > /etc/birth_certificate
               - git clone https://github.com/benfairclough/code-simplewebsite.git
-              - cp /SimpleWebsite/index.html /var/www/html/
+              - cp /code-simplewebsite/index.html /var/www/html/
               - sed -i -e 's/nginx!/nginx!BOX3/g' /var/www/html/index.nginx-debian.html
               - mkdir -p /etc/apt/keyrings
               - curl -fsSL https://packages.broadcom.com/artifactory/api/security/keypair/SaltProjectKey/public | sudo tee /etc/apt/keyrings/salt-archive-keyring.pgp
