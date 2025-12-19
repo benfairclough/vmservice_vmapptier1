@@ -55,13 +55,17 @@ stringData:
               - date > /etc/birth_certificate
               - git clone https://github.com/benfairclough/code-simplewebsite.git
               - cp /SimpleWebsite/index.html /var/www/html/
-              - sed -i -e 's/nginx!/nginx!BOX3/g' /var/www/html/index.nginx-debian.html  
+              - sed -i -e 's/nginx!/nginx!BOX3/g' /var/www/html/index.nginx-debian.html
+              - mkdir -p /etc/apt/keyrings
+              - curl -fsSL https://packages.broadcom.com/artifactory/api/security/keypair/SaltProjectKey/public | sudo tee /etc/apt/keyrings/salt-archive-keyring.pgp
+              - curl -fsSL https://github.com/saltstack/salt-install-guide/releases/latest/download/salt.sources | sudo tee /etc/apt/sources.list.d/salt.sources
+              - sudo apt update
             #salt_minion:
             #  conf:
             #    file_client: local
             #    fileserver_backend: [gitfs]
             #    gitfs_remotes: ['https://github.com/_user_/_repo_.git']
-            #    master: salt.example.com
+            #    master: 192.168.20.30
             #  config_dir: /etc/salt
             #  grains:
             #    role: [web]
